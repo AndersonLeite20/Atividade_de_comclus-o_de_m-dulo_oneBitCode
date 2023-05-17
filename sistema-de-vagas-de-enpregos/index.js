@@ -1,12 +1,5 @@
 const cadastro = Array();
 
-/*const obj = {
-  nome: "anderson",
-  idade: 25,
-  funcao: "dev",
-};
-cadastro.push(obj);
-console.log(cadastro);*/
 let opcoes = String();
 function menu() {
   opcoes = prompt(
@@ -16,46 +9,82 @@ function menu() {
 }
 
 function listaDevagas() {
-  let arrayDeCadastro = String();
-  for (let indice = 0; indice < cadastro.length; indice++) {
-    arrayDeCadastro += "\n" + [indice + 1] + " - " + cadastro[indice].nome;
-  }
-  alert("\nNúmero de candidatos: " + cadastro.length + "\n" + arrayDeCadastro);
-  return arrayDeCadastro;
+  const arrayDeCadastro = cadastro.reduce(function (textofinal, vaga, indice) {
+    textofinal += indice = ". ";
+    textofinal += vaga.nome;
+    textofinal += " (" + cadastro.candidato.length + " candidatos)\n";
+    return textofinal;
+  }, "");
+  alert(arrayDeCadastro);
 }
 function criarNovaVaga() {
   nome = prompt("Nome do candidato(a)");
   descricao = prompt("Descrição da vaga");
   data = prompt("Data limite");
-  const comfirmar = confirm("Comfirmar a candidatura de " + nome);
-  if (comfirmar === true) {
-    const candidato = {
-      nome,
-      descricao,
-      data,
-    };
+  const comfirmar = confirm(
+    "Deseja criar uma nova vaga com essas imformações?\nNome: " +
+      nome +
+      "\nDescrição" +
+      descricao +
+      "\nData limite:" +
+      data
+  );
+  if (comfirmar) {
+    const candidato = { nome, descricao, data, candidatos: [] };
     cadastro.push(candidato);
+    alert("Vaga criada");
   } else {
     alert("candidatura canselada!");
   }
 }
 function visualizarvaga() {
-  let i = parseFloat(prompt("insira o indice da vaga"));
-  if (i > cadastro.length) {
-    alert("usuario não encontrado!");
-  } else {
-    alert(
-      "\nindice: " +
-        i +
-        "\nNome;" +
-        cadastro[i - 1].nome +
-        "\nDescrição: " +
-        cadastro[i - 1].descricao +
-        "\nData limita: " +
-        cadastro[i - 1].data
-    );
+  const indice = parseFloat(prompt("insira o indice da vaga"));
+  const vaga = cadastro[indice];
+
+  const canddatosEnTexto = cadastro.candidato.reduce(function (
+    textofinal,
+    candidato
+  ) {
+    return textofinal + "\n - " + candidato;
+  },
+  "");
+  alert(
+    "Vaga nº" +
+      indice +
+      "\nNome: " +
+      vaga.nome +
+      "\nDescrição: " +
+      vaga.descricao +
+      "\nData limite: " +
+      vaga.data +
+      "\nQuantidade de candidatos: " +
+      cadastro.candidato.length +
+      "\nCandidatos inscritos: " +
+      canddatosEnTexto
+  );
+}
+function escreverCandidato() {
+  const candidato = prompt("Nome do candidato(a)");
+  const indice = parseFloat(prompt("insira o indíce da vaga"));
+  const vaga = vaga[indice];
+  let comfirmar = confirm(
+    "inscrever o candidato(a)\nNome: " +
+      candidato +
+      " na vaga" +
+      indice +
+      "?\nNome: " +
+      vaga.nome +
+      "\nDescrição: " +
+      vaga.descricao +
+      "\nData limite: " +
+      vaga.data
+  );
+  if (comfirmar) {
+    vaga.cadastro.push(candidato);
+    alert("inscrição realizada!");
   }
 }
+function excluirvaga() {}
 function sair() {
   alert("Saindo...");
 }
@@ -75,8 +104,10 @@ do {
       visualizarvaga();
       break;
     case "4":
+      escreverCandidato();
       break;
     case "5":
+      excluirvaga();
       break;
     case "6":
       sair();
