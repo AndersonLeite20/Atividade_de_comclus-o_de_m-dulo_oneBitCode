@@ -1,4 +1,4 @@
-const cadastro = Array();
+const vagas = Array();
 
 let opcoes = String();
 function menu() {
@@ -9,10 +9,10 @@ function menu() {
 }
 
 function listaDevagas() {
-  const arrayDeCadastro = cadastro.reduce(function (textofinal, vaga, indice) {
+  const arrayDeCadastro = vagas.reduce(function (textofinal, vaga, indice) {
     textofinal += indice = ". ";
     textofinal += vaga.nome;
-    textofinal += " (" + cadastro.candidato.length + " candidatos)\n";
+    textofinal += "( " + vagas.length + " candidatos)\n";
     return textofinal;
   }, "");
   alert(arrayDeCadastro);
@@ -31,7 +31,7 @@ function criarNovaVaga() {
   );
   if (comfirmar) {
     const candidato = { nome, descricao, data, candidatos: [] };
-    cadastro.push(candidato);
+    vagas.push(candidato);
     alert("Vaga criada");
   } else {
     alert("candidatura canselada!");
@@ -39,15 +39,14 @@ function criarNovaVaga() {
 }
 function visualizarvaga() {
   const indice = parseFloat(prompt("insira o indice da vaga"));
-  const vaga = cadastro[indice];
-
-  const canddatosEnTexto = cadastro.candidato.reduce(function (
-    textofinal,
-    candidato
-  ) {
+  if (indice >= vagas.length || indice < 0) {
+    alert("indice inváldo!");
+    return;
+  }
+  const vaga = vagas[indice];
+  const canddatosEnTexto = vaga.reduce(function (textofinal, candidato) {
     return textofinal + "\n - " + candidato;
-  },
-  "");
+  }, "");
   alert(
     "Vaga nº" +
       indice +
@@ -80,11 +79,28 @@ function escreverCandidato() {
       vaga.data
   );
   if (comfirmar) {
-    vaga.cadastro.push(candidato);
+    vagas.vaga.push(candidato);
     alert("inscrição realizada!");
   }
 }
-function excluirvaga() {}
+function excluirvaga() {
+  const indice = prompt("informe o indice davaga que deseja excluir:");
+  const vaga = vaga[indice];
+  const comfirmacao = confirm(
+    "tem certeza que deseja excluir a vaga " +
+      indice +
+      "?\nNome: " +
+      vaga.nome +
+      "\nDescrição:" +
+      vaga.descricao +
+      "\nData limite: " +
+      vaga.data
+  );
+  if (comfirmacao) {
+    vagas.splice(indice, 1);
+    alert("Vaga excluida!");
+  }
+}
 function sair() {
   alert("Saindo...");
 }
